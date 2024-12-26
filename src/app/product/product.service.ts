@@ -41,6 +41,10 @@ export class ProductService {
     return this.productModel.findById(id);
   }
 
+  findOneBySlug(slug: string) {
+    return this.productModel.findOne({ slug });
+  }
+
   update(
     id: MongooseSchema.Types.ObjectId,
     updateProductInput: UpdateProductInput,

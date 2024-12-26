@@ -34,6 +34,13 @@ export class ProductResolver {
     return this.productService.findOne(id);
   }
 
+  @Query(() => Product, { name: 'productBySlug' })
+  findOneBySlug(
+    @Args('slug', { type: () => String }) slug: string,
+  ): Promise<Product> {
+    return this.productService.findOneBySlug(slug);
+  }
+
   @Mutation(() => Product)
   updateProduct(
     @Args('updateProductInput') updateProductInput: UpdateProductInput,
