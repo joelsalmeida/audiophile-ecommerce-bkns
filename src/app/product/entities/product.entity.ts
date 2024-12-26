@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, registerEnumType } from '@nestjs/graphql';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 
@@ -16,13 +16,88 @@ export class BoxContentItem {
 
 @ObjectType()
 @Schema()
+export class ImagePaths {
+  @Field(() => String)
+  @Prop({ required: true })
+  small: string;
+
+  @Field(() => String)
+  @Prop({ required: true })
+  medium: string;
+
+  @Field(() => String)
+  @Prop({ required: true })
+  large: string;
+}
+
+@ObjectType()
+@Schema()
+export class PreviewImage {
+  @Field(() => String, { nullable: true })
+  @Prop({ required: false })
+  alt?: string;
+
+  @Field(() => ImagePaths)
+  @Prop({ required: true })
+  paths: ImagePaths;
+}
+
+@ObjectType()
+@Schema()
+export class GalleryImage {
+  @Field(() => String, { nullable: true })
+  @Prop({ required: false })
+  alt?: string;
+
+  @Field(() => ImagePaths)
+  @Prop({ required: true })
+  paths: ImagePaths;
+}
+
+@ObjectType()
+@Schema()
+export class GalleryImages {
+  @Field(() => GalleryImage, { description: 'First gallery image.' })
+  @Prop({ required: true })
+  imageOne: GalleryImage;
+
+  @Field(() => GalleryImage, { description: 'Second gallery image.' })
+  @Prop({ required: true })
+  imageTwo: GalleryImage;
+
+  @Field(() => GalleryImage, { description: 'Third gallery image.' })
+  @Prop({ required: true })
+  imageThree: GalleryImage;
+}
+
+export enum Category {
+  HEADPHONES = 'headphones',
+  SPEAKERS = 'speakers',
+  EARPHONES = 'earphones',
+}
+
+registerEnumType(Category, {
+  name: 'Category',
+  description: 'Available product categories.',
+});
+
+@ObjectType()
+@Schema()
 export class Product {
   @Field(() => String, { description: 'Unique product identifier.' })
   _id: MongooseSchema.Types.ObjectId;
 
+  @Field(() => String, { description: 'Product slug.' })
+  @Prop({ required: true, index: true, unique: true })
+  slug: string;
+
   @Field(() => String, { description: 'Product name.' })
   @Prop({ required: true })
   name: string;
+
+  @Field(() => Category, { description: 'Product category.' })
+  @Prop({ required: true, enum: Category })
+  category: Category;
 
   @Field(() => [String], { description: 'Product description.' })
   @Prop({ type: [String], required: true })
@@ -44,6 +119,14 @@ export class Product {
   @Field(() => Int, { description: 'Product price in cents.' })
   @Prop({ required: true })
   price: number;
+
+  @Field(() => PreviewImage, { description: 'Product preview image.' })
+  @Prop({ required: true })
+  previewImage: PreviewImage;
+
+  @Field(() => GalleryImages, { description: 'Product gallery images.' })
+  @Prop({ required: true })
+  galleryImages: GalleryImages;
 
   @Field(() => Date, {
     description: 'Product release date.',
