@@ -5,6 +5,7 @@ import { InjectModel } from '@nestjs/mongoose';
 import { Product, ProductDocument } from './entities/product.entity';
 import { Model } from 'mongoose';
 import { Schema as MongooseSchema } from 'mongoose';
+import { PaginationArgs } from '../common/dto/pagination.args';
 
 @Injectable()
 export class ProductService {
@@ -20,6 +21,26 @@ export class ProductService {
 
   async findAll(limit: number, skip: number) {
     const result = await this.productModel.aggregate([
+      {
+        $facet: {
+          products: [{ $skip: skip }, { $limit: limit }],
+          totalCount: [{ $count: 'total' }],
+        },
+      },
+    ]);
+
+    const products = result[0]?.products || [];
+    const totalCount = result[0]?.totalCount?.[0]?.total || 0;
+
+    return {
+      products,
+      totalCount,
+    };
+  }
+
+  async findByCategory(category: string, { limit, skip }: PaginationArgs) {
+    const result = await this.productModel.aggregate([
+      { $match: { category } },
       {
         $facet: {
           products: [{ $skip: skip }, { $limit: limit }],

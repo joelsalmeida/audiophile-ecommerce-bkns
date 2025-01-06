@@ -9,6 +9,7 @@ import { CreateProductInput } from './dto/create-product.input';
 import { UpdateProductInput } from './dto/update-product.input';
 import { Schema as MongooseSchema } from 'mongoose';
 import { PaginationArgs } from '../common/dto/pagination.args';
+import { FindByCategoryArgs } from './dto/find-by-category.args';
 
 @Resolver(() => Product)
 export class ProductResolver {
@@ -25,6 +26,12 @@ export class ProductResolver {
   findAll(@Args() args: PaginationArgs) {
     const { limit, skip } = args;
     return this.productService.findAll(limit, skip);
+  }
+
+  @Query(() => ProductsPaginatedResponse, { name: 'productsByCategory' })
+  findByCategory(@Args() args: FindByCategoryArgs) {
+    const { category, paginationArgs } = args;
+    return this.productService.findByCategory(category, paginationArgs);
   }
 
   @Query(() => Product, { name: 'product' })
