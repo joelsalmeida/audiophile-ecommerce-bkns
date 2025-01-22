@@ -49,4 +49,8 @@ export class OrderService {
       return this._order;
     }
   }
+
+  getCart(): OrderInterface {
+    return this._order;
+  }
 }

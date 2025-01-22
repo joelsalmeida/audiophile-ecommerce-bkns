@@ -1,4 +1,4 @@
-import { Resolver, Mutation, Args } from '@nestjs/graphql';
+import { Resolver, Mutation, Args, Query } from '@nestjs/graphql';
 import { OrderService } from './order.service';
 import { Order } from './entities/order.entity';
 import { AddItemToCartInput } from './dto/add-item-to-cart-input';
@@ -24,6 +24,12 @@ export class OrderResolver {
       removeItemFromCartInput,
     );
 
+    return { cartItems: order.cartItems, totalCost: order.totalCost };
+  }
+
+  @Query(() => Order)
+  getCart() {
+    const order = this.orderService.getCart();
     return { cartItems: order.cartItems, totalCost: order.totalCost };
   }
 }
