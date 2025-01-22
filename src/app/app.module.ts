@@ -7,6 +7,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ProductModule } from './product/product.module';
 import { join } from 'path';
 import { CommonModule } from './common/common.module';
+import { OrderModule } from './order/order.module';
 
 @Module({
   imports: [
@@ -32,6 +33,7 @@ import { CommonModule } from './common/common.module';
       cache: true,
     }),
     ProductModule,
+    OrderModule,
     CommonModule,
   ],
   controllers: [],
