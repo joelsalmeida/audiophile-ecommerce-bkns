@@ -26,6 +26,7 @@ export class OrderService {
     if (productFound) {
       const newProduct: CartItemInterface = {
         id: productFound._id,
+        name: productFound.name,
         price: productFound.price,
         imagePath: productFound.previewImage.paths.small,
         quantity: addToCartInput.quantity,

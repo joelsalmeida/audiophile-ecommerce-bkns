@@ -2,6 +2,7 @@ import { Schema as MongooseSchema } from 'mongoose';
 
 interface CartItemInterface {
   id: MongooseSchema.Types.ObjectId;
+  name: string;
   price: number;
   quantity: number;
   imagePath: string;

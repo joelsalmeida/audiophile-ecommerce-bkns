@@ -6,6 +6,11 @@ export class CartItem {
   @Field(() => String, { description: 'Item id.' })
   id: MongooseSchema.Types.ObjectId;
 
+  @Field(() => String, {
+    description: 'Product name.',
+  })
+  name: string;
+
   @Field(() => Int, { description: 'Item price.' })
   price: number;
 
