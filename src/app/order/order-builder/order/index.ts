@@ -49,8 +49,9 @@ export class Order implements OrderInterface {
     return this;
   }
 
-  clearCart(): void {
+  clearCart(): OrderInterface {
     this._cartItems = [];
+    return this;
   }
 
   get cartItems(): CartItemInterface[] {

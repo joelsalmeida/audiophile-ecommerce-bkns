@@ -21,7 +21,7 @@ interface OrderInterface {
 
   addItemToCart(item: CartItemInterface): OrderInterface;
   removeItemFromCart(id: MongooseSchema.Types.ObjectId): OrderInterface;
-  clearCart(): void;
+  clearCart(): OrderInterface;
 }
 
 export { CartItemInterface, TotalCostInterface, OrderInterface };
