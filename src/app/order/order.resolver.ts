@@ -27,6 +27,12 @@ export class OrderResolver {
     return { cartItems: order.cartItems, totalCost: order.totalCost };
   }
 
+  @Mutation(() => Order)
+  async clearCart() {
+    const order = this.orderService.clearCart();
+    return { cartItems: order.cartItems, totalCost: order.totalCost };
+  }
+
   @Query(() => Order)
   getCart() {
     const order = this.orderService.getCart();

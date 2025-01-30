@@ -32,9 +32,7 @@ export class OrderService {
         quantity: addToCartInput.quantity,
       };
 
-      this._order.addItemToCart(newProduct);
-
-      return this._order;
+      return this._order.addItemToCart(newProduct);
     }
   }
 
@@ -45,10 +43,12 @@ export class OrderService {
     const productFound = await this.productService.findOne(itemId);
 
     if (productFound) {
-      this._order.removeItemFromCart(itemId);
-
-      return this._order;
+      return this._order.removeItemFromCart(itemId);
     }
+  }
+
+  clearCart(): OrderInterface {
+    return this._order.clearCart();
   }
 
   getCart(): OrderInterface {
