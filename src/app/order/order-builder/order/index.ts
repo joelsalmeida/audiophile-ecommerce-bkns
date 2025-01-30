@@ -58,11 +58,14 @@ export class Order implements OrderInterface {
   }
 
   get totalCost() {
-    const total = this.cartItems.reduce(
+    const AT_LAST_ONE_ITEM_ON_CART = this._cartItems.length > 0;
+
+    const total = this._cartItems.reduce(
       (acc, curr) => acc + curr.price * curr.quantity,
       0,
     );
-    const shipping = 5000;
+
+    const shipping = AT_LAST_ONE_ITEM_ON_CART ? 5000 : 0;
     const VAT = total * 0.2;
     const grandTotal = total + shipping + VAT;
 
