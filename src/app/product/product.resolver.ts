@@ -34,6 +34,13 @@ export class ProductResolver {
     return this.productService.findByCategory(category, paginationArgs);
   }
 
+  @Query(() => ProductsPaginatedResponse, { name: 'relatedProducts' })
+  getRelatedProducts(
+    @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
+  ) {
+    return this.productService.getRelatedProducts(id);
+  }
+
   @Query(() => Product, { name: 'product' })
   findOne(
     @Args('id', { type: () => String }) id: MongooseSchema.Types.ObjectId,
