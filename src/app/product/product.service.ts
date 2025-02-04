@@ -64,6 +64,7 @@ export class ProductService {
     const productFound = await this.productModel.findById(id, 'category');
 
     const result = await this.productModel.aggregate([
+      { $match: { _id: { $ne: productFound._id } } },
       {
         $addFields: {
           categoryPriority:
