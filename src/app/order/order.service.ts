@@ -5,6 +5,7 @@ import { AddItemToCartInput } from './dto/add-item-to-cart-input';
 import {
   CartItemInterface,
   OrderInterface,
+  OrderDataInterface,
 } from './order-builder/order/index.types';
 import { OrderBuilderInterface } from './order-builder/index.types';
 import { OrderBuilder } from './order-builder';
@@ -19,7 +20,9 @@ export class OrderService {
     this._order = this._orderBuilder.build();
   }
 
-  async addToCart(addToCartInput: AddItemToCartInput): Promise<OrderInterface> {
+  async addToCart(
+    addToCartInput: AddItemToCartInput,
+  ): Promise<OrderDataInterface> {
     const itemId = addToCartInput._id;
     const productFound = await this.productService.findOne(itemId);
 
@@ -38,7 +41,7 @@ export class OrderService {
 
   async removeItemFromCart(
     removeItemFromCartInput: RemoveItemFromCartInput,
-  ): Promise<OrderInterface> {
+  ): Promise<OrderDataInterface> {
     const itemId = removeItemFromCartInput._id;
     const productFound = await this.productService.findOne(itemId);
 
@@ -47,11 +50,22 @@ export class OrderService {
     }
   }
 
-  clearCart(): OrderInterface {
+  clearCart(): OrderDataInterface {
     return this._order.clearCart();
   }
 
-  getCart(): OrderInterface {
+  getCart(): OrderDataInterface {
     return this._order;
+  }
+
+  placeOrder(): OrderDataInterface {
+    const placedOrder = {
+      cartItems: this._order.cartItems,
+      totalCost: this._order.totalCost,
+    };
+
+    this._order = this._orderBuilder.reset().build();
+
+    return placedOrder;
   }
 }

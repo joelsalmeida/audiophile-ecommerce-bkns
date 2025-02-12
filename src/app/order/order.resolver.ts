@@ -38,4 +38,11 @@ export class OrderResolver {
     const order = this.orderService.getCart();
     return { cartItems: order.cartItems, totalCost: order.totalCost };
   }
+
+  @Mutation(() => Order)
+  async placeOrder() {
+    const order = this.orderService.placeOrder();
+
+    return { cartItems: order.cartItems, totalCost: order.totalCost };
+  }
 }
