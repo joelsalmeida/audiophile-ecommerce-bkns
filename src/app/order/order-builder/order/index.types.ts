@@ -24,4 +24,14 @@ interface OrderInterface {
   clearCart(): OrderInterface;
 }
 
-export { CartItemInterface, TotalCostInterface, OrderInterface };
+interface OrderDataInterface {
+  cartItems: CartItemInterface[];
+  totalCost: TotalCostInterface;
+}
+
+export {
+  CartItemInterface,
+  TotalCostInterface,
+  OrderInterface,
+  OrderDataInterface,
+};

@@ -2,10 +2,10 @@ import { CartItemInterface, OrderInterface } from './index.types';
 import { Schema as MongooseSchema } from 'mongoose';
 
 export class Order implements OrderInterface {
-  private _cartItems: CartItemInterface[];
+  private _cartItems: CartItemInterface[] = [];
 
   constructor(cartItems: CartItemInterface[]) {
-    this._cartItems = cartItems;
+    this._cartItems = [...cartItems];
   }
 
   private getItemById(id: MongooseSchema.Types.ObjectId) {
@@ -55,7 +55,7 @@ export class Order implements OrderInterface {
   }
 
   get cartItems(): CartItemInterface[] {
-    return this._cartItems;
+    return [...this._cartItems];
   }
 
   get totalCost() {
