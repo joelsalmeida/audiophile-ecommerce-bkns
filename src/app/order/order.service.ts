@@ -9,9 +9,10 @@ import {
 } from './order-builder/order/index.types';
 import { OrderBuilderInterface } from './order-builder/index.types';
 import { OrderBuilder } from './order-builder';
+import { OrderServiceInterface } from './order.service.interface';
 
 @Injectable()
-export class OrderService {
+export class OrderService implements OrderServiceInterface {
   private _order: OrderInterface;
   private _orderBuilder: OrderBuilderInterface;
 
