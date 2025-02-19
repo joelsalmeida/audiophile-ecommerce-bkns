@@ -7,9 +7,10 @@ import { Model } from 'mongoose';
 import { Schema as MongooseSchema } from 'mongoose';
 import { PaginationArgs } from '../common/dto/pagination.args';
 import { RelatedProductsPrioritySwitch } from './utilities';
+import { ProductServiceInterface } from './product.service.interface';
 
 @Injectable()
-export class ProductService {
+export class ProductService implements ProductServiceInterface {
   constructor(
     @InjectModel(Product.name)
     private productModel: Model<ProductDocument>,
